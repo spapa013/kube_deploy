@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name:  minnie65p3-affine-automatch
+spec:
+  parallelism: 32 # number of jobs to deploy ; Allen requests a limit of 5
+  template:
+    spec:
+      restartPolicy: Never
+      hostNetwork: true
+      volumes: # Example volume mounting
+      - name: mnt # name for the volume to be reference in container volumeMounts
+        hostPath:
+          path: /mnt # Directory on the host machine to be mounted
+      containers:
+      - name: minnie65p3-affine-automatch
+        image: at-docker.ad.bcm.edu:5000/minnie65p3-stelios:default
+        resources:
+          requests:
+            cpu: 1
+            memory: 12Gi
+        volumeMounts: # Container reference to volumes define above
+        - name: mnt # Name of the volume define above
+          mountPath: /mnt # Location of where to mount it in the container
+        env:
+        - name: DJ_HOST
+          valueFrom:
+            secretKeyRef:
+              name: datajoint-credentials
+              key: DJ_HOST
+        - name: DJ_USER
+          valueFrom:
+            secretKeyRef:
+              name: datajoint-credentials
+              key: DJ_USER
+        - name: DJ_PASS
+          valueFrom:
+            secretKeyRef:
+              name: datajoint-credentials
+              key: DJ_PASS
+        command: ["/bin/sh"]
+        args: ["-c", "python3 -u /src/minnie65p3/kubernetes/affine_transform_automatch.py"] # path to script

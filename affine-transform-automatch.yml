@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name:  minnie65p3-affine-automatch
 spec:
-  parallelism: 1 # number of jobs to deploy ; 
+  parallelism: 16 # number of jobs to deploy ; 
   template:
     spec:
       restartPolicy: Never

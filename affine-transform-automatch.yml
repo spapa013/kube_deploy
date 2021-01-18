@@ -14,7 +14,7 @@ spec:
           path: /mnt # Directory on the host machine to be mounted
       containers:
       - name: minnie65p3-affine-automatch
-        image: at-docker.ad.bcm.edu:5000/minnie65p3-stelios:secure
+        image: at-docker.ad.bcm.edu:5000/minnie65p3-stelios
         resources:
           requests:
             cpu: 1

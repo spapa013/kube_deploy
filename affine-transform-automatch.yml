@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name:  minnie65p3-affine-automatch
 spec:
-  parallelism: 32 # number of jobs to deploy ; Allen requests a limit of 5
+  parallelism: 1 # number of jobs to deploy ; 
   template:
     spec:
       restartPolicy: Never

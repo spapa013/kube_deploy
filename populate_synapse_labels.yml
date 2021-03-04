@@ -18,7 +18,7 @@ spec:
         resources:
           requests:
             cpu: 1
-            memory: 4Gi
+            memory: 10Gi
         volumeMounts: # Container reference to volumes define above
         - name: mnt # Name of the volume define above
           mountPath: /mnt # Location of where to mount it in the container

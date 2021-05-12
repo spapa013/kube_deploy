@@ -21,7 +21,7 @@ spec:
             - at-compute002
   containers:
   - name: voila-multi-match-tool
-    image: at-docker.ad.bcm.edu:5000/voila-minnie65p3:latest # This image is created from a Dockerfile that's a thin wrapper over the at-docker.ad.bcm.edu:5000/minnie65p3-stelios:latest image with voila installed.
+    image: at-docker.ad.bcm.edu:5000/minnie65p3-voila:latest # This image is created from a Dockerfile that's a thin wrapper over the at-docker.ad.bcm.edu:5000/minnie65p3-stelios:latest image with voila installed.
     ports:
       - containerPort: 8866
     volumeMounts:

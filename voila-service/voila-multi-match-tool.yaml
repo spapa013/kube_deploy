@@ -1,0 +1,69 @@
+apiVersion: v1
+kind: Pod # This tells kubernetes what kind of class it is working with
+metadata:
+  name: voila-multi-match-tool
+  labels:
+    app: voila-multi-match-tool
+spec:
+  restartPolicy: Never
+  volumes:
+  - name: mnt
+    hostPath:
+      path: /mnt
+  affinity: # Affinity to select certain nodes with 11GB, 12GB, or 24GB memory
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution: # Require nodes to have this label
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/hostname # Target label is gpu_mem_size
+            operator: In # Key must have one of the following values
+            values:
+            - at-compute002
+  containers:
+  - name: voila-multi-match-tool
+    image: at-docker.ad.bcm.edu:5000/voila-minnie65p3:latest # This image is created from a Dockerfile that's a thin wrapper over the at-docker.ad.bcm.edu:5000/minnie65p3-stelios:latest image with voila installed.
+    ports:
+      - containerPort: 8866
+    volumeMounts:
+    - name: mnt
+      mountPath: /mnt
+    resources:
+      requests:
+        cpu: 4
+        memory: 16Gi # 32Gi # 32 is what we want, currently at-compute002 doesn't have enough requests left though
+        # ephemeral-storage: 50Gi
+    env:
+    - name: DJ_HOST
+      valueFrom:
+        secretKeyRef:
+          name: datajoint-credentials
+          key: DJ_HOST
+    - name: DJ_USER
+      valueFrom:
+        secretKeyRef:
+          name: datajoint-credentials
+          key: DJ_USER
+    - name: DJ_PASS
+      valueFrom:
+        secretKeyRef:
+          name: datajoint-credentials
+          key: DJ_PASS
+    - name: SLACK_BOT_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: slackbot-credentials
+          key: SLACK_BOT_TOKEN
+    - name: VOILA_ENV
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: voila-multi-match-tool-service
+spec:
+  type: NodePort
+  selector:
+    app: voila-multi-match-tool
+  ports:
+    - protocol: TCP
+      port: 8866
+      targetPort: 8866

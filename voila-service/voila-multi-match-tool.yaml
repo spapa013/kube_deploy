@@ -29,8 +29,8 @@ spec:
       mountPath: /mnt
     resources:
       requests:
-        cpu: 4
-        memory: 16Gi # 32Gi # 32 is what we want, currently at-compute002 doesn't have enough requests left though
+        cpu: 8
+        memory: 32Gi #16Gi #32 is what we want, currently at-compute002 doesn't have enough requests left though
         # ephemeral-storage: 50Gi
     env:
     - name: DJ_HOST

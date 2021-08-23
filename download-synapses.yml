@@ -39,4 +39,4 @@ spec:
               name: datajoint-credentials
               key: DJ_PASS
         command: ["/bin/sh"]
-        args: ["-c", "python3 -u /src/minnie65p3/kubernetes/download_synapses.py"] # path to script
+        args: ["-c", "python3 -u /src/minnie65p3/kubernetes/populate_nucleus_synapse_ext.py"] # path to script

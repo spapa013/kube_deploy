@@ -14,7 +14,7 @@ spec:
           path: /mnt # Directory on the host machine to be mounted
       containers:
       - name: minnie65-download-meshes
-        image: at-docker.ad.bcm.edu:5000/microns-materialization:new
+        image: at-docker.ad.bcm.edu:5000/microns-materialization
         resources:
           requests:
             cpu: 1

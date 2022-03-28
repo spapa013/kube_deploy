@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name:  minnie65-download-meshes
 spec:
-  parallelism: 5 # number of jobs to deploy ; Allen requests a limit of 5
+  parallelism: 24 # number of jobs to deploy ; Allen requests a limit of 5
   template:
     spec:
       restartPolicy: Never

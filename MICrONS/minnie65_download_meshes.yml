@@ -12,7 +12,19 @@ spec:
       - name: mnt # name for the volume to be reference in container volumeMounts
         hostPath:
           path: /mnt # Directory on the host machine to be mounted
-      containers:
+      affinity: # Affinity to select certain nodes with 11GB, 12GB, or 24GB memory
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution: # Require nodes to have this label
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname # Target label is gpu_mem_size
+                operator: In # Key must have one of the following values
+                values:
+                - at-compute003
+                - at-compute004
+                - at-compute005
+                - at-compute006
+containers:
       - name: minnie65-download-meshes
         image: at-docker.ad.bcm.edu:5000/microns-materialization
         resources:

@@ -24,7 +24,7 @@ spec:
                 - at-compute004
                 - at-compute005
                 - at-compute006
-containers:
+      containers:
       - name: minnie65-download-meshes
         image: at-docker.ad.bcm.edu:5000/microns-materialization
         resources:

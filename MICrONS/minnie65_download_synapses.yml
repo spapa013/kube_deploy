@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name:  minnie65-download-synapses
 spec:
-  parallelism: 48 # number of jobs to deploy ; Allen requests a limit of 5
+  parallelism: 12 # number of jobs to deploy ; Allen requests a limit of 5
   template:
     spec:
       restartPolicy: Never

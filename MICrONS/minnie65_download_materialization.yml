@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name:  minnie65-download-materialization
 spec:
-  parallelism: 5 # number of jobs to deploy ; Allen requests a limit of 5
+  parallelism: 1 # number of jobs to deploy
   template:
     spec:
       restartPolicy: Never
@@ -12,13 +12,25 @@ spec:
       - name: mnt # name for the volume to be reference in container volumeMounts
         hostPath:
           path: /mnt # Directory on the host machine to be mounted
+      affinity: # Affinity to select certain nodes with 11GB, 12GB, or 24GB memory
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution: # Require nodes to have this label
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname # Target label is gpu_mem_size
+                operator: In # Key must have one of the following values
+                values:
+                - at-compute003
+                - at-compute004
+                - at-compute005
+                - at-compute006
       containers:
       - name: minnie65-download-materialization
         image: at-docker.ad.bcm.edu:5000/microns-materialization
         resources:
           requests:
             cpu: 1
-            memory: 3Gi
+            memory: 2Gi
         volumeMounts: # Container reference to volumes define above
         - name: mnt # Name of the volume define above
           mountPath: /mnt # Location of where to mount it in the container

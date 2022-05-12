@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name:  minnie65-download-materialization
 spec:
-  parallelism: 1 # number of jobs to deploy
+  parallelism: 32 # number of jobs to deploy
   template:
     spec:
       restartPolicy: Never
